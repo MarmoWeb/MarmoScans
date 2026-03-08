@@ -3,21 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visor - MarmoScans</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <title>MarmoScans - Visor</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
     <style>
-        /* Ajustes específicos para el visor que no afectan el resto de la web */
-        body { display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        header { position: sticky; top: 0; z-index: 1000; width: 100%; }
-        
+        /* Ajustes para que el visor no se vea roto */
+        body { background-color: #0b0d17; color: white; display: flex; flex-direction: column; align-items: center; }
+        header { width: 100%; } /* Asegura que el header ocupe el ancho */
         #manga-pages { width: 100%; max-width: 900px; display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
         #manga-pages img { width: 100%; height: auto; display: block; margin-bottom: 5px; }
-
-        /* Estilo del Footer de Navegación */
-        .nav-footer { width: 100%; max-width: 900px; display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #10121d; color: white; margin-bottom: 50px; border-radius: 8px; }
-        .nav-footer a { color: white; text-decoration: none; font-weight: bold; padding: 10px 20px; background: #5a32a8; border-radius: 5px; }
-        .nav-footer a:hover { background: #7c4dff; }
     </style>
 </head>
 <body>
@@ -28,39 +22,36 @@
             <h1>MarmoScans</h1>
         </div>
         <nav class="main-nav">
-            <a href="../index.html" class="nav-link">Inicio</a>
+            <a href="index.html" class="nav-link">Inicio</a>
+            <a href="#" class="nav-link">MarmoWeb</a>
+            <a href="#" class="nav-link">Twitter</a>
         </nav>
     </header>
 
     <div id="manga-pages">
-        <h2 id="titulo-cap">Cargando capítulo...</h2>
+        <h2 id="titulo-cap">Cargando...</h2>
     </div>
 
-    <div class="nav-footer">
-        <a href="#" id="prev-link">← PREV</a>
-        <a href="../index.html"><i class="fas fa-bars"></i> Lista</a>
-        <a href="#" id="next-link">NEXT →</a>
+    <div class="nav-footer" style="margin-bottom: 50px;">
+        <a href="#" id="prev-link" style="padding: 10px; background: #5a32a8; color:white; text-decoration:none;">← PREV</a>
+        <a href="index.html" style="padding: 10px; background: #333; color:white; text-decoration:none;">☰ Lista</a>
+        <a href="#" id="next-link" style="padding: 10px; background: #5a32a8; color:white; text-decoration:none;">NEXT →</a>
     </div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
-        let cap = parseInt(params.get('c')) || 1171; // Tu capítulo inicial
+        let cap = parseInt(params.get('c')) || 1171;
         
         document.getElementById('titulo-cap').innerText = "Capítulo " + cap;
-        document.title = "One Piece " + cap + " - MarmoScans";
-
-        // Lógica de botones (ajusta los links según tu estructura)
         document.getElementById('next-link').href = `visor.html?c=${cap + 1}`;
         document.getElementById('prev-link').href = `visor.html?c=${cap - 1}`;
 
         const container = document.getElementById('manga-pages');
-        
-        // Carga automática de imágenes
+        // Asegúrate de que esta ruta coincida con tu carpeta en GitHub
         for (let i = 1; i <= 30; i++) {
-            let pageNum = i.toString().padStart(3, '0');
+            let p = i.toString().padStart(3, '0');
             let img = document.createElement('img');
-            // Asegúrate que esta ruta coincida con tu carpeta en GitHub
-            img.src = `../manga/OnePiece/${cap}/${cap}-${pageNum}.png`; 
+            img.src = `mangas/OnePiece/${cap}/${cap}-${p}.png`; 
             img.onerror = function() { this.style.display = 'none'; };
             container.appendChild(img);
         }
