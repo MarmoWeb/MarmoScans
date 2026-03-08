@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="page-title">Visor de Manga</title>
     <style>
-        /* --- ESTILOS GENERALES (Modo Oscuro Elegante) --- */
+        /* --- ESTILOS GENERALES --- */
         body {
-            background-color: #0b0d17; /* Fondo oscuro idéntico a tu web principal */
+            background-color: #0b0d17;
             color: white;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Centra todo horizontalmente */
+            align-items: center;
         }
 
-        /* --- ESTILOS DE LA CABECERA --- */
+        /* --- CABECERA --- */
         header {
             width: 100%;
             padding: 20px 0;
             text-align: center;
-            background-color: #10121d; /* Un tono un poco más claro para separar */
+            background-color: #10121d;
             border-bottom: 1px solid #1a1d29;
             margin-bottom: 20px;
         }
@@ -32,18 +32,16 @@
             font-size: 2em;
         }
 
-        /* Contenedor de botones (Volver y Siguiente) */
         .nav-buttons {
             display: flex;
-            gap: 15px; /* Espacio entre botones */
+            gap: 15px;
             justify-content: center;
         }
 
-        /* Estilo general para botones de navegación */
         .nav-btn {
             display: inline-block;
             padding: 10px 25px;
-            background-color: #5a32a8; /* Color morado de tu diseño */
+            background-color: #5a32a8;
             color: white;
             text-decoration: none;
             border-radius: 5px;
@@ -52,47 +50,45 @@
         }
 
         .nav-btn:hover {
-            background-color: #7c4dff; /* Morado más claro al pasar el mouse */
+            background-color: #7c4dff;
         }
 
-        /* --- ESTILOS DEL CONTENEDOR DE IMÁGENES --- */
+        /* --- CONTENEDOR DE IMÁGENES (Aumentado para páginas dobles) --- */
         #manga-pages {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
-            /* Esto es clave para que las imágenes sean GRANDES como el ejemplo */
-            max-width: 1000px; /* Ancho máximo para que no se pierda calidad en pantallas gigantes */
-            padding-bottom: 40px; /* Espacio al final */
+            /* Aumentamos a 1400px para que las páginas dobles se vean GRANDES */
+            max-width: 1400px; 
+            padding-bottom: 40px;
         }
 
-        /* --- ESTILOS DE LAS IMÁGENES (Agrandarlas) --- */
+        /* --- LAS IMÁGENES --- */
         #manga-pages img {
-            width: 100%; /* La imagen ocupa todo el ancho del contenedor (#manga-pages) */
-            height: auto; /* Mantiene la proporción para no deformarse */
+            width: auto;         /* Permite que la imagen use su ancho natural */
+            max-width: 100%;     /* Impide que se salga de la pantalla */
+            height: auto;
             display: block;
-            margin-bottom: 15px; /* Pequeña separación entre páginas en cascada */
-            
-            /* Sombra suave opcional para dar profundidad (como en weebcentral) */
+            margin-bottom: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            
-            /* Borde inferior muy sutil opcional */
-            /* border-bottom: 2px solid #1a1d29; */
         }
 
-        /* Para que en móviles muy pequeños la imagen no se pegue al borde */
+        /* Ajuste para que las verticales no se vean tan pequeñas en monitores grandes */
+        @media (min-width: 1024px) {
+            #manga-pages img {
+                min-width: 60%; 
+            }
+        }
+
         @media (max-width: 600px) {
             #manga-pages img {
-                width: 95%;
+                width: 100%;
+                min-width: 100%;
             }
         }
     </style>
 </head>
-    <div class="manga-container">
-    <img src="https://link-de-tu-pagina-1.jpg" class="visor-img">
-    <img src="https://link-de-tu-pagina-2-DOBLE.jpg" class="visor-img">
-    <img src="https://link-de-tu-pagina-3.jpg" class="visor-img">
-</div>
 <body>
 
     <header>
@@ -107,50 +103,44 @@
         </div>
 
     <script>
-        // --- LOGICA DE JAVASCRIPT ---
-
         // 1. Obtener los parámetros de la URL
         const params = new URLSearchParams(window.location.search);
-        let cap = parseInt(params.get('c')); // Obtenemos el número como número entero
+        let cap = parseInt(params.get('c'));
 
-        // Si no hay parámetro de capítulo en la URL, asumimos el 1 (seguridad)
         if (isNaN(cap)) { cap = 1; }
 
-        // 2. Títulos dinámicos (puedes expandir esto con nombres reales)
+        // 2. Títulos dinámicos
         let nombreCapitulo = "";
-        if (cap === 1) { nombreCapitulo = "Capítulo 1166"; } // El que subiste
-        else { nombreCapitulo = "Capítulo " + (1165 + cap); } // Cálculo para los siguientes
+        if (cap === 1) { nombreCapitulo = "Capítulo 1166"; } 
+        else { nombreCapitulo = "Capítulo " + (1165 + cap); }
 
         document.getElementById('titulo-cap').innerText = nombreCapitulo;
         document.getElementById('page-title').innerText = "Viendo " + nombreCapitulo;
 
         // 3. Configurar el botón "Siguiente Capítulo"
         const nextLink = document.getElementById('next-btn');
-        let nextCap = cap + 1; // Siguiente número
+        let nextCap = cap + 1; 
         
-        // --- IMPORTANTE: Configura aquí el límite de capítulos ---
-        // Por ejemplo, si solo has subido 2 capítulos (el 1166 y 1167):
-        if (cap < 2) { 
+        // Límite de capítulos (Ajusta este número según subas más)
+        if (cap < 5) {  
             nextLink.href = `visor.html?c=${nextCap}`;
-            nextLink.style.display = 'inline-block'; // Asegurar que sea visible
+            nextLink.style.display = 'inline-block';
         } else {
-            nextLink.style.display = 'none'; // Ocultar el botón si ya es el último capítulo subido
+            nextLink.style.display = 'none';
         }
 
         const container = document.getElementById('manga-pages');
 
-        // 4. Cargar las imágenes grandes
-        // Bucaré 30 páginas por capítulo (puedes ajustar este número)
+        // 4. Cargar las imágenes
         for (let i = 1; i <= 30; i++) {
-            let pageNum = i.toString().padStart(3, '0'); // Convierte de 1 a "001"
+            let pageNum = i.toString().padStart(3, '0');
             let img = document.createElement('img');
             
-            // RUTA CORRECTA: Asume que las carpetas se llaman 'capitulo-1', 'capitulo-2', etc.
-            // Y que las fotos se llaman '1166-001.png', '1167-001.png' (basado en el cálculo de arriba)
+            // Usamos tu ruta de carpetas
             img.src = `manga/capitulo-${cap}/${1165 + cap}-${pageNum}.png`; 
             img.alt = `Página ${pageNum}`;
             
-            // Si la imagen no existe (ej. el capítulo solo tiene 20 páginas y buscamos 30), la oculta
+            // Si la imagen no existe, la oculta
             img.onerror = function() { this.style.display = 'none'; };
             
             container.appendChild(img);
