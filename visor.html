@@ -37,10 +37,11 @@
         padding: 20px 0;
       }
       #manga-container img {
-        width: 100%;
+        width: 100%; /* Asegura que no se salga de la pantalla en móviles */
+        max-width: 1600px; /* AQUÍ limitas el tamaño máximo de la imagen */
         height: auto;
         display: block;
-        margin-bottom: 5px;
+        margin: 5px auto; /* 'auto' centra la imagen si es más pequeña que la pantalla */
       }
 
       .nav-footer {
