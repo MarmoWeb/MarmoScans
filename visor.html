@@ -144,8 +144,21 @@
       document.title = `${manga} Cap ${cap} - MarmoScans`;
 
       // 3. Configurar botones de navegación
-      // Definimos el primer capítulo disponible
-      const primerCapitulo = 1171;
+      // --- CONFIGURACIÓN DINÁMICA ---
+      // Aquí añades cada manga nuevo cuando lo subas
+      const limitesCapitulos = {
+        OnePiece: 1171,
+        Nagatoro: 96,
+        ChainsawMan: 231,
+        BlackClover: 381,
+        BorutoTBV: 23,
+        AoNoHako: 1,
+        Jojolion: 65,
+        DBsuper: 105,
+      };
+      // Obtenemos el mínimo basándonos en el manga que viene en la URL
+      // Si el manga no está en la lista, asumimos 1 por seguridad
+      const primerCapitulo = limitesCapitulos[manga] || 1;
 
       // Botón Anterior
       const prevBtn = document.getElementById("prev-btn");
