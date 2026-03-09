@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Visor - MarmoScans</title>
     <style>
+      /* Estilos generales */
       body {
         background-color: #0b0d17;
         color: white;
@@ -14,14 +15,31 @@
         font-family: Arial, sans-serif;
       }
 
-      /* Header restaurado */
+      /* Tu header original */
       header {
         width: 100%;
-        position: relative;
-        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 30px;
         background: #0b0d17;
         border-bottom: 1px solid #333;
-        padding: 15px 0;
+        box-sizing: border-box;
+      }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-size: 0.9rem;
       }
 
       #manga-container {
@@ -35,18 +53,17 @@
       /* Imágenes verticales base (1050px) */
       .page-img {
         width: 95%;
-        max-width: 1050px;
+        max-width: 950px;
         margin: 10px auto;
         display: block;
       }
 
-      /* Imágenes dobles (detectadas por el script) */
+      /* Imágenes dobles (detectadas por script) */
       .double-page {
-        max-width: 1400px !important;
+        max-width: 1600px !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
       }
 
-      /* Diseño de botones */
       .nav-footer {
         width: 90%;
         max-width: 800px;
@@ -70,12 +87,14 @@
   </head>
   <body>
     <header>
-      <h1
-        id="info-display"
-        style="text-align: center; margin: 0; font-size: 1.5rem"
-      >
-        Cargando...
-      </h1>
+      <a href="index.html" class="logo">MARMOSCANS</a>
+      <div class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="#">MarmoWeb</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+        <a href="#">Youtube</a>
+      </div>
     </header>
 
     <div id="manga-container"></div>
@@ -91,8 +110,6 @@
       const manga = params.get("manga") || "OnePiece";
       const cap = parseInt(params.get("c")) || 1;
 
-      document.getElementById("info-display").innerText =
-        `${manga} - Capítulo ${cap}`;
       document.getElementById("back-to-list").href =
         `mangas/${manga.toLowerCase()}.html`;
       document.getElementById("next-btn").href =
@@ -102,7 +119,6 @@
 
       const container = document.getElementById("manga-container");
 
-      // Función que carga imágenes en orden exacto
       function cargarPaginas(i) {
         let p = i.toString().padStart(3, "0");
         let img = new Image();
@@ -110,19 +126,13 @@
         img.className = "page-img";
 
         img.onload = function () {
-          // Si la imagen es más ancha que 1200px, es doble
           if (this.naturalWidth > 1200) {
             this.classList.add("double-page");
           }
           container.appendChild(img);
-          cargarPaginas(i + 1); // Llama a la siguiente página
-        };
-
-        img.onerror = function () {
-          console.log("Fin del capítulo.");
+          cargarPaginas(i + 1);
         };
       }
-
       cargarPaginas(1);
     </script>
   </body>
