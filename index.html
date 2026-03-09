@@ -1,143 +1,176 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="assets/icons/Icon_image.jpg" type="image/x-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="assets/icons/Icon_image.jpg"
+      type="image/x-icon"
+    />
     <title>MarmoScans</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Header -->
     <header>
-        <div class="logo">
-            <span class="logo-icon"><i class="fas fa-book-open"></i></span>
-            <h1>MarmoScans</h1>
-        </div>
+      <div class="logo">
+        <span class="logo-icon"><i class="fas fa-book-open"></i></span>
+        <h1>MarmoScans</h1>
+      </div>
 
-        <nav class="main-nav">
-            <a href="#" class="nav-link active">Inicio</a>
-            <a href="#" class="nav-link">MarmoWeb</a>
-            <a href="#" class="nav-link">Twitter</a>
-            <a href="#" class="nav-link">Instagram</a>
-            <a href="#" class="nav-link">Youtube</a>
-        </nav>
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link active">Inicio</a>
+        <a href="https://sites.google.com/view/marmoweb/inicio" class="nav-link"
+          >MarmoWeb</a
+        >
+        <a href="https://x.com/MarmotaSenpai" class="nav-link">Twitter</a>
+        <a
+          href="https://www.instagram.com/marmotasenpai/?hl=es"
+          class="nav-link"
+          >Instagram</a
+        >
+        <a href="https://www.youtube.com/@MarmotaSenpai1" class="nav-link"
+          >Youtube</a
+        >
+      </nav>
 
-        <div class="header-actions">
-            <div class="search-box">
-                <input type="text" placeholder="Buscar manga...">
-                <i class="fas fa-search"></i>
-            </div>
-        </div>
-
-        <button class="mobile-menu-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+      <button class="mobile-menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </header>
 
     <!-- Manga Collection Section -->
     <section id="collection" class="manga-section">
-        <div class="section-header">
-            <h2 class="section-title">Mangas Pagados</h2>
-            <p class="section-subtitle">Descubre los mangas mas leidos por nuestra comunidad</p>
-        </div>
+      <div class="section-header">
+        <h2 class="section-title">Mangas Patrocinados</h2>
+      </div>
 
-        <div class="manga-grid">
-            <!-- Card 1 -->
-            <article class="manga-card">
-                <div class="card-image">
-                    <img src="https://pbs.twimg.com/media/G3rLtUAWYAAI4XJ?format=jpg&name=4096x4096" alt="One Piece">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">One Piece</h3>
-                    <a href="./mangas/one-piece.html" class="btn-read">Leer</a>
-                </div>
-            </article>
+      <div class="manga-grid">
+        <!-- Card 1 -->
+        <article class="manga-card">
+          <div class="card-image">
+            <img
+              src="https://pbs.twimg.com/media/G3rLtUAWYAAI4XJ?format=jpg&name=4096x4096"
+              alt="One Piece"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">One Piece</h3>
+            <a href="./mangas/one-piece.html" class="btn-read">Leer</a>
+          </div>
+        </article>
 
-            <!-- Card 2 -->
-            <article class="manga-card">
-                <div class="card-image">
-                    <img src="https://pbs.twimg.com/media/G_kgYrybkAAoKWu?format=jpg&name=900x900" alt="Chainsaw Man">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Chainsaw Man</h3>
-                    <a href="./mangas/chainsawman.html" class="btn-read">Leer</a>
-                </div>
-            </article>
+        <!-- Card 2 -->
+        <article class="manga-card">
+          <div class="card-image">
+            <img
+              src="https://pbs.twimg.com/media/G_kgYrybkAAoKWu?format=jpg&name=900x900"
+              alt="Chainsaw Man"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Chainsaw Man</h3>
+            <a href="./mangas/chainsawman.html" class="btn-read">Leer</a>
+          </div>
+        </article>
 
-            <!-- Card 3 -->
-            <article class="manga-card">
-                <div class="card-image">
-                    <img src="https://pbs.twimg.com/media/Gz4_FBIbAAAN215?format=jpg&name=medium" alt="Black Clover">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Black Clover</h3>
-                    <a href="./mangas/blackclover.html" class="btn-read">Leer</a>
-                </div>
-            </article>
+        <!-- Card 3 -->
+        <article class="manga-card">
+          <div class="card-image">
+            <img
+              src="https://pbs.twimg.com/media/Gz4_FBIbAAAN215?format=jpg&name=medium"
+              alt="Black Clover"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Black Clover</h3>
+            <a href="./mangas/blackclover.html" class="btn-read">Leer</a>
+          </div>
+        </article>
 
-            <!-- Card 4 -->
-            <article class="manga-card">
-                <div class="card-image">
-                    <img src="https://pbs.twimg.com/media/G_J-889aoAEKY3R?format=jpg&name=medium" alt="Boruto TBV">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Boruto TBV</h3>
-                    <a href="./mangas/boruto.html" class="btn-read">Leer</a>
-                </div>
-            </article>
+        <!-- Card 4 -->
+        <article class="manga-card">
+          <div class="card-image">
+            <img
+              src="https://pbs.twimg.com/media/G_J-889aoAEKY3R?format=jpg&name=medium"
+              alt="Boruto TBV"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Boruto TBV</h3>
+            <a href="./mangas/boruto.html" class="btn-read">Leer</a>
+          </div>
+        </article>
 
-            <!-- Card 5 -->
-            <article class="manga-card">
-                <div class="card-image">
-                    <img src="https://pbs.twimg.com/media/GQy60xZXwAEwOst?format=jpg&name=large" alt="Jojolion">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Jojolion</h3>
-                    <a href="#" class="btn-read">Leer</a>
-                </div>
-            </article>
+        <!-- Card 5 -->
+        <article class="manga-card">
+          <div class="card-image">
+            <img
+              src="https://pbs.twimg.com/media/GQy60xZXwAEwOst?format=jpg&name=large"
+              alt="Jojolion"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Jojolion</h3>
+            <a href="#" class="btn-read">Leer</a>
+          </div>
+        </article>
 
-            <!-- Card 6 -->
-            <article class="manga-card">
-                <div class="card-image">
-                    <img src="https://pbs.twimg.com/media/GPK7gAhXAAEAx4w?format=jpg&name=large" alt="Ijiranaide, Nagatoro-san">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Ijiranaide, Nagatoro-san</h3>
-                    <a href="#" class="btn-read">Leer</a>
-                </div>
-            </article>
+        <!-- Card 6 -->
+        <article class="manga-card">
+          <div class="card-image">
+            <img
+              src="https://pbs.twimg.com/media/GPK7gAhXAAEAx4w?format=jpg&name=large"
+              alt="Ijiranaide, Nagatoro-san"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Ijiranaide, Nagatoro-san</h3>
+            <a href="#" class="btn-read">Leer</a>
+          </div>
+        </article>
 
-            <!-- Card 7 -->
-            <article class="manga-card">
-                <div class="card-image">
-                    <img src="https://pbs.twimg.com/media/E8ZmixoVoAQZg4h?format=jpg&name=medium" alt="Ao no Hako">
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Ao no Hako</h3>
-                    <a href="#" class="btn-read">Leer</a>
-                </div>
-            </article>
-            
-        </div>
+        <!-- Card 7 -->
+        <article class="manga-card">
+          <div class="card-image">
+            <img
+              src="https://pbs.twimg.com/media/E8ZmixoVoAQZg4h?format=jpg&name=medium"
+              alt="Ao no Hako"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Ao no Hako</h3>
+            <a href="#" class="btn-read">Leer</a>
+          </div>
+        </article>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-bottom">
-            <p>&copy; 2026 MarmoScans. Todos los derechos reservados.</p>
-        </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MarmoScans. Todos los derechos reservados.</p>
+      </div>
     </footer>
 
     <script src="./main.js"></script>
-</body>
+  </body>
 </html>
