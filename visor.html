@@ -319,15 +319,22 @@
         { threshold: 0.3 },
       );
 
-      function reproducirOST(id, titulo) {
+      function reproducirOST(id, title) {
+        if (currentSongId === id) return;
         currentSongId = id;
+
         if (player && player.loadVideoById) {
-          player.loadVideoById(id);
-          player.playVideo();
-          const toast = document.getElementById("ost-notification");
-          toast.innerText = `🎵 Escuchando: ${titulo}`;
-          toast.classList.add("show");
-          setTimeout(() => toast.classList.remove("show"), 4000);
+          // Si el reproductor ya existe, forzamos la carga del nuevo ID de inmediato
+          player.loadVideoById({
+            videoId: id,
+            startSeconds: 0,
+            suggestedQuality: "small",
+          });
+          player.playVideo(); // Aseguramos que inicie
+          mostrarToast(title);
+        } else {
+          // Si es la primera vez que se carga el reproductor
+          mostrarToast(title);
         }
       }
 
