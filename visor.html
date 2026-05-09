@@ -204,19 +204,20 @@
 
       // --- CONFIGURACIÓN DE MÚSICA ---
       const musicData = {
-        Nagatoro: {
-          95: [
-            { start: 1, end: 5, id: "dQw4w9WgXcQ", title: "Nagatoro Theme" },
-            {
-              start: 6,
-              end: 100,
-              id: "3jH6L_vLqYw",
-              title: "Escena Divertida",
-            },
-          ],
-          default: { id: "p19p_mSIn_k", title: "Ambiente MarmoScans" },
-        },
         OnePiece: {
+          1182: [
+            // <--- AQUÍ agregas el nuevo capítulo
+            { start: 1, end: 4, id: "4EMR7ZfZzR4", title: "Imu vs Loki" },
+            { start: 5, end: 6, id: "rOEpFJrXzbM", title: "Sanji se levanta" },
+            { start: 7, end: 7, id: "j6isC1-dQ_w", title: "Bilioteca Buho" },
+            {
+              start: 8,
+              end: 11,
+              id: "KflMVGQOMwI",
+              title: "Caballeros Sagrados",
+            },
+            { start: 12, end: 13, id: "6s-Icke6F8M", title: "ZAZA aparece" },
+          ],
           default: { id: "p19p_mSIn_k", title: "Grand Line Ambient" },
         },
       };
@@ -300,14 +301,28 @@
 
       function onYouTubeIframeAPIReady() {
         player = new YT.Player("youtube-player", {
+          height: "0",
+          width: "0",
+          playerVars: {
+            loop: 1, // Activa el bucle
+            playlist: currentSongId, // Requerido por YouTube para que el loop funcione
+          },
           events: {
             onReady: (event) => {
               event.target.setVolume(
                 document.getElementById("volume-slider").value,
               );
             },
+            onStateChange: onPlayerStateChange, // Detecta cuando termina la canción
           },
         });
+      }
+
+      // Esta función asegura que si la canción termina, se vuelva a reproducir la misma
+      function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+          player.playVideo();
+        }
       }
 
       document
