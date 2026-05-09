@@ -180,32 +180,44 @@
         `${manga.replace(/([A-Z])/g, " $1")} - Capítulo ${cap}`;
       document.title = `${manga} Cap ${cap} - MarmoScans`;
 
-      const limitesCapitulos = {
-        OnePiece: 1182,
-        Nagatoro: 95,
-        ChainsawMan: 231,
+      // Define aquí el PRIMER capítulo que tienes subido de cada manga
+      const primerCapituloSubido = {
+        OnePiece: 1171,
         BlackClover: 381,
+        Fate: 1,
+        Nagatoro: 1,
         BorutoTBV: 23,
         AoNoHako: 1,
-        Jojolion: 65,
-        DBsuper: 105,
-        Fate: 1,
       };
-      // Obtener el último capítulo disponible para este manga
-      const ultimoCapitulo = limitesCapitulos[manga] || 1;
 
-      // Botón Anterior: Solo se oculta si es el capítulo 1
+      // Define aquí el ÚLTIMO capítulo disponible (el que vas actualizando)
+      const limitesCapitulos = {
+        OnePiece: 1182,
+        BlackClover: 392,
+        Fate: 7,
+        Nagatoro: 95,
+        BorutoTBV: 33,
+        AoNoHako: 1,
+      };
+
+      // Obtener los límites específicos para el manga actual
+      const inicioManga = primerCapituloSubido[manga] || 1;
+      const finManga = limitesCapitulos[manga] || 1;
+
+      // LÓGICA BOTÓN ANTERIOR
       const prevBtn = document.getElementById("prev-btn");
-      if (cap <= 1) {
+      if (cap <= inicioManga) {
+        // Si es el primer capítulo que subiste (ej. 1171), se oculta
         prevBtn.style.visibility = "hidden";
       } else {
         prevBtn.href = `visor.html?manga=${manga}&c=${cap - 1}`;
         prevBtn.style.visibility = "visible";
       }
 
-      // Botón Siguiente: Se oculta al llegar al límite definido
+      // LÓGICA BOTÓN SIGUIENTE
       const nextBtn = document.getElementById("next-btn");
-      if (cap >= ultimoCapitulo) {
+      if (cap >= finManga) {
+        // Si es el último capítulo disponible (ej. 1182 o 392), se oculta
         nextBtn.style.visibility = "hidden";
       } else {
         nextBtn.href = `visor.html?manga=${manga}&c=${cap + 1}`;
