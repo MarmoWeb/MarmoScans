@@ -319,6 +319,22 @@
         { threshold: 0.3 },
       );
 
+      // Función para mostrar el nombre de la canción en pantalla
+      function mostrarToast(titulo) {
+        const toast = document.getElementById("ost-notification");
+        if (toast) {
+          toast.innerText = `🎵 Escuchando: ${titulo}`;
+          toast.classList.add("show");
+
+          // Limpiar el temporizador anterior si existe para que no se oculte antes de tiempo
+          if (window.toastTimeout) clearTimeout(window.toastTimeout);
+
+          window.toastTimeout = setTimeout(() => {
+            toast.classList.remove("show");
+          }, 4000);
+        }
+      }
+
       function reproducirOST(id, title) {
         if (currentSongId === id) return;
         currentSongId = id;
