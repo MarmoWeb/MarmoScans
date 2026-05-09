@@ -191,17 +191,26 @@
         DBsuper: 105,
         Fate: 1,
       };
-      const primerCapitulo = limitesCapitulos[manga] || 1;
+      // Obtener el último capítulo disponible para este manga
+      const ultimoCapitulo = limitesCapitulos[manga] || 1;
 
+      // Botón Anterior: Solo se oculta si es el capítulo 1
       const prevBtn = document.getElementById("prev-btn");
-      if (cap <= primerCapitulo) {
+      if (cap <= 1) {
         prevBtn.style.visibility = "hidden";
       } else {
         prevBtn.href = `visor.html?manga=${manga}&c=${cap - 1}`;
+        prevBtn.style.visibility = "visible";
       }
 
-      document.getElementById("next-btn").href =
-        `visor.html?manga=${manga}&c=${cap + 1}`;
+      // Botón Siguiente: Se oculta al llegar al límite definido
+      const nextBtn = document.getElementById("next-btn");
+      if (cap >= ultimoCapitulo) {
+        nextBtn.style.visibility = "hidden";
+      } else {
+        nextBtn.href = `visor.html?manga=${manga}&c=${cap + 1}`;
+        nextBtn.style.visibility = "visible";
+      }
 
       // --- CONFIGURACIÓN DE MÚSICA ---
       /* prettier-ignore */
