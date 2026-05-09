@@ -335,7 +335,7 @@
         }
       }
 
-      function reproducirOST(id, title) {
+      function reproducirOST(id, titulo) {
         if (currentSongId === id) return;
         currentSongId = id;
 
@@ -347,10 +347,10 @@
             suggestedQuality: "small",
           });
           player.playVideo(); // Aseguramos que inicie
-          mostrarToast(title);
+          mostrarToast(titulo);
         } else {
           // Si es la primera vez que se carga el reproductor
-          mostrarToast(title);
+          mostrarToast(titulo);
         }
       }
 
