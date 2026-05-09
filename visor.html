@@ -203,43 +203,25 @@
         `visor.html?manga=${manga}&c=${cap + 1}`;
 
       // --- CONFIGURACIÓN DE MÚSICA ---
+      /* prettier-ignore */
       const musicData = {
         OnePiece: {
           1182: [
             // <--- AQUÍ agregas el nuevo capítulo
-            {
-              start: 1,
-              end: 4,
-              id: "4EMR7ZfZzR4",
-              title: "One Piece Ost - Black Hole",
-            },
-            {
-              start: 5,
-              end: 6,
-              id: "rOEpFJrXzbM",
-              title: "One Piece Ost - If There Are Storms, There Are Stars Too",
-            },
-            {
-              start: 7,
-              end: 7,
-              id: "j6isC1-dQ_w",
-              title: "One Piece Ost - Desperate Situation (Part 1)",
-            },
-            {
-              start: 8,
-              end: 11,
-              id: "KflMVGQOMwI",
-              title: "One Piece Ost - God Knights Theme (Fanmade)",
-            },
-            {
-              start: 12,
-              end: 13,
-              id: "6s-Icke6F8M",
-              title: "One Piece Ost - Desperate Situation",
-            },
+            { start: 1, end: 4, id: "4EMR7ZfZzR4", title: "One Piece Ost - Black Hole",},
+            { start: 5, end: 6, id: "rOEpFJrXzbM", title: "One Piece Ost - If There Are Storms, There Are Stars Too",},
+            { start: 7, end: 7, id: "j6isC1-dQ_w", title: "One Piece Ost - Desperate Situation (Part 1)",},
+            { start: 8, end: 11,id: "KflMVGQOMwI", title: "One Piece Ost - God Knights Theme (Fanmade)",},
+            { start: 12,end: 13,id: "6s-Icke6F8M", title: "One Piece Ost - Desperate Situation",},
           ],
           default: { id: "p19p_mSIn_k", title: "Grand Line Ambient" },
         },
+        FateStrangeFake: {
+          1: [
+            { start: 1, end: 5, id: "76vbmoP42nI", title: "Fate/GO Ost - Village/Hassan",},
+            { start: 6, end: 13, id: "ZjqsvwiwXo0", title: "Hiroyuki Sawano - A34N",},
+          ]
+        }
       };
 
       let player;
