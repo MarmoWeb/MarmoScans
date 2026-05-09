@@ -340,16 +340,20 @@
         currentSongId = id;
 
         if (player && player.loadVideoById) {
-          // Si el reproductor ya existe, forzamos la carga del nuevo ID de inmediato
+          // 1. Detenemos cualquier carga previa
+          player.stopVideo();
+
+          // 2. Cargamos el nuevo con un pequeño margen
           player.loadVideoById({
             videoId: id,
             startSeconds: 0,
             suggestedQuality: "small",
           });
-          player.playVideo(); // Aseguramos que inicie
+
+          // 3. Forzamos el play
+          player.playVideo();
           mostrarToast(titulo);
         } else {
-          // Si es la primera vez que se carga el reproductor
           mostrarToast(titulo);
         }
       }
@@ -393,6 +397,17 @@
         });
 
       cargarPaginas(1);
+      // Forzar el inicio del audio al primer clic o scroll si YouTube está bloqueado
+      window.addEventListener(
+        "mousedown",
+        () => {
+          if (player && player.getPlayerState() !== 1) {
+            // 1 = Reproduciendo
+            player.playVideo();
+          }
+        },
+        { once: true },
+      ); // Solo se ejecuta la primera vez
     </script>
   </body>
 </html>
