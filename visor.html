@@ -37,11 +37,49 @@
         padding: 20px 0;
       }
       #manga-container img {
-        width: 100%; /* Asegura que no se salga de la pantalla en móviles */
-        max-width: 1600px; /* AQUÍ limitas el tamaño máximo de la imagen */
+        width: 100%;
+        max-width: 1600px;
         height: auto;
         display: block;
-        margin: 5px auto; /* 'auto' centra la imagen si es más pequeña que la pantalla */
+        margin: 5px auto;
+      }
+
+      /* ESTILOS NUEVOS PARA OST */
+      .ost-toast {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(90, 50, 168, 0.9);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 30px;
+        transform: translateY(100px);
+        transition: 0.5s;
+        z-index: 2000;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      }
+      .ost-toast.show {
+        transform: translateY(0);
+      }
+
+      .volume-control {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(22, 24, 33, 0.8);
+        padding: 10px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 2000;
+        border: 1px solid #333;
+      }
+      input[type="range"] {
+        accent-color: #7c4dff;
+        cursor: pointer;
       }
 
       .nav-footer {
@@ -70,18 +108,15 @@
       .list-btn {
         background: #333;
       }
-      /* Estilo para páginas normales */
       .single-page {
         width: 100%;
-        max-width: 1100px; /* Ajusta este ancho a tu gusto */
+        max-width: 1100px;
         margin: 15px auto;
         display: block;
       }
-
-      /* Estilo para páginas dobles */
       .double-page {
         width: 100%;
-        max-width: 1800px; /* Tamaño mayor para las dobles */
+        max-width: 1800px;
         margin: 25px auto;
         display: block;
         box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
@@ -94,7 +129,6 @@
         <span class="logo-icon"><i class="fas fa-book-open"></i></span>
         <h1>MarmoScans</h1>
       </div>
-
       <nav class="main-nav">
         <a href="index.html" class="nav-link active">Inicio</a>
         <a href="https://sites.google.com/view/marmoweb/inicio" class="nav-link"
@@ -110,11 +144,8 @@
           >Youtube</a
         >
       </nav>
-
       <button class="mobile-menu-btn">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
     </header>
 
@@ -122,6 +153,13 @@
       <h2 id="info-display" style="margin-bottom: 20px; color: #aaa">
         Cargando contenido...
       </h2>
+    </div>
+
+    <div id="ost-notification" class="ost-toast"></div>
+    <div id="youtube-player" style="display: none"></div>
+    <div class="volume-control">
+      <span>🔊</span>
+      <input type="range" id="volume-slider" min="0" max="100" value="50" />
     </div>
 
     <div class="nav-footer">
@@ -133,19 +171,15 @@
     </div>
 
     <script>
-      // 1. Capturar los datos de la URL
+      // --- LÓGICA ORIGINAL MODIFICADA ---
       const params = new URLSearchParams(window.location.search);
-      const manga = params.get("manga") || "OnePiece"; // Manga por defecto
-      const cap = parseInt(params.get("c")) || 1; // Capítulo por defecto
+      const manga = params.get("manga") || "OnePiece";
+      const cap = parseInt(params.get("c")) || 1;
 
-      // 2. Actualizar textos e información
       document.getElementById("info-display").innerText =
         `${manga.replace(/([A-Z])/g, " $1")} - Capítulo ${cap}`;
       document.title = `${manga} Cap ${cap} - MarmoScans`;
 
-      // 3. Configurar botones de navegación
-      // --- CONFIGURACIÓN DINÁMICA ---
-      // Aquí añades cada manga nuevo cuando lo subas
       const limitesCapitulos = {
         OnePiece: 1171,
         Nagatoro: 95,
@@ -156,55 +190,132 @@
         Jojolion: 65,
         DBsuper: 105,
       };
-      // Obtenemos el mínimo basándonos en el manga que viene en la URL
-      // Si el manga no está en la lista, asumimos 1 por seguridad
       const primerCapitulo = limitesCapitulos[manga] || 1;
 
-      // Botón Anterior
       const prevBtn = document.getElementById("prev-btn");
       if (cap <= primerCapitulo) {
-        // Si estamos en el primer capítulo, ocultamos el botón
-        prevBtn.style.visibility = "hidden"; // Oculta visualmente pero mantiene el espacio
+        prevBtn.style.visibility = "hidden";
       } else {
         prevBtn.href = `visor.html?manga=${manga}&c=${cap - 1}`;
-        prevBtn.style.visibility = "visible";
       }
 
-      // Botón Siguiente (siempre activo en tu caso)
       document.getElementById("next-btn").href =
         `visor.html?manga=${manga}&c=${cap + 1}`;
 
-      // 4. Cargar imágenes dinámicamente
+      // --- CONFIGURACIÓN DE MÚSICA ---
+      const musicData = {
+        Nagatoro: {
+          95: [
+            { start: 1, end: 5, id: "dQw4w9WgXcQ", title: "Nagatoro Theme" },
+            {
+              start: 6,
+              end: 100,
+              id: "3jH6L_vLqYw",
+              title: "Escena Divertida",
+            },
+          ],
+          default: { id: "p19p_mSIn_k", title: "Ambiente MarmoScans" },
+        },
+        OnePiece: {
+          default: { id: "p19p_mSIn_k", title: "Grand Line Ambient" },
+        },
+      };
+
+      let player;
+      let currentSongId = null;
+
+      // --- CARGA DINÁMICA + ASIGNACIÓN DE AUDIO ---
       const container = document.getElementById("manga-container");
 
-      // En lugar de un bucle 'for', usaremos una función que cargue una por una
       function cargarPaginas(i) {
         let p = i.toString().padStart(3, "0");
         let img = document.createElement("img");
-
-        // RUTA DINÁMICA
         img.src = `Marmoscans/${manga}/${cap}/${cap}-${p}.webp`;
 
-        // ESTO ES LO NUEVO: Detectar tamaño cuando la imagen cargue
         img.onload = function () {
-          // Si el ancho es mayor a 1200px, es una página doble
           if (this.naturalWidth > 3000) {
             this.classList.add("double-page");
           } else {
             this.classList.add("single-page");
           }
+
+          // ASIGNAR AUDIO A LA IMAGEN SEGÚN EL RANGO
+          const infoManga = musicData[manga];
+          if (infoManga) {
+            const configCap = infoManga[cap];
+            let found = null;
+            if (configCap && Array.isArray(configCap)) {
+              found = configCap.find((r) => i >= r.start && i <= r.end);
+            }
+            const finalTrack = found || infoManga.default;
+            if (finalTrack) {
+              this.setAttribute("data-audio", finalTrack.id);
+              this.setAttribute("data-title", finalTrack.title);
+            }
+          }
+
           container.appendChild(this);
-          // Cargar la siguiente página solo si la anterior existió
+          observer.observe(this); // Empezar a vigilar esta imagen recién cargada
           cargarPaginas(i + 1);
         };
 
         img.onerror = function () {
-          // Si falla (no existe la página), simplemente paramos
           console.log("Fin del capítulo.");
         };
       }
 
-      // Iniciar carga
+      // --- OBSERVADOR DE SCROLL ---
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const audioId = entry.target.getAttribute("data-audio");
+              const title = entry.target.getAttribute("data-title");
+              if (audioId && audioId !== currentSongId) {
+                reproducirOST(audioId, title);
+              }
+            }
+          });
+        },
+        { threshold: 0.3 },
+      );
+
+      function reproducirOST(id, titulo) {
+        currentSongId = id;
+        if (player && player.loadVideoById) {
+          player.loadVideoById(id);
+          player.playVideo();
+          const toast = document.getElementById("ost-notification");
+          toast.innerText = `🎵 Escuchando: ${titulo}`;
+          toast.classList.add("show");
+          setTimeout(() => toast.classList.remove("show"), 4000);
+        }
+      }
+
+      // --- API YOUTUBE ---
+      var tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("youtube-player", {
+          events: {
+            onReady: (event) => {
+              event.target.setVolume(
+                document.getElementById("volume-slider").value,
+              );
+            },
+          },
+        });
+      }
+
+      document
+        .getElementById("volume-slider")
+        .addEventListener("input", (e) => {
+          if (player) player.setVolume(e.target.value);
+        });
+
       cargarPaginas(1);
     </script>
   </body>
