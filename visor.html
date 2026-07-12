@@ -450,6 +450,9 @@
         player = new YT.Player("youtube-player", {
           height: "0",
           width: "0",
+          // ---> AGREGA ESTA LÍNEA AQUÍ <---
+          host: "https://www.youtube-nocookie.com",
+          // ----------------------------------
           playerVars: {
             loop: 1, // Activa el bucle
             playlist: currentSongId, // Requerido por YouTube para que el loop funcione
