@@ -156,7 +156,8 @@
     </div>
 
     <div id="ost-notification" class="ost-toast"></div>
-    <div id="marmo-audio" style="display: none"></div>
+    // --- Aplicar OST Manga ---
+    <audio id="marmo-audio" loop style="display: none"></audio>;
     <div class="volume-control">
       <span>🔊</span>
       <input type="range" id="volume-slider" min="0" max="100" value="50" />
@@ -441,9 +442,6 @@
           mostrarToast(titulo);
         }
       }
-
-      // --- Aplicar OST Manga ---
-      <audio id="marmo-audio" loop style="display:none;"></audio>;
 
       // Esta función asegura que si la canción termina, se vuelva a reproducir la misma
       function onPlayerStateChange(event) {
