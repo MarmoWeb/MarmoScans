@@ -1507,3 +1507,23 @@ footer {
     box-shadow: 0 5px 25px rgba(0,0,0,0.5);
 }
 
+/* El botón del capítulo debe tener posición relativa para alinear el círculo */
+.cap-link {
+    position: relative;
+    display: inline-block; /* O el estilo que ya tenga tu botón */
+}
+
+/* El círculo rojo manual */
+.badge-nuevo::after {
+    content: "";
+    position: absolute;
+    top: -5px;         /* Lo sube un poco de la esquina */
+    right: -5px;       /* Lo mueve un poco a la derecha de la esquina */
+    width: 10px;       /* Tamaño del círculo */
+    height: 10px;
+    background-color: #ef4444; /* Rojo */
+    border-radius: 50%;        /* Redondo */
+    border: 2px solid #0b0d17; /* Borde del color de tu fondo para que resalte */
+    box-shadow: 0 0 6px #ef4444; /* Brillo neón opcional */
+}
+
