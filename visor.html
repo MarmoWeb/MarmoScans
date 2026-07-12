@@ -274,10 +274,10 @@
             { start: 9, end: 13, id: "dgg3RObpqXk", title: "One Piece Ost - Zoro Ashura vs Kaido",},
           ],
           1188:[
-            { start: 4, end: 4, id: "rEFqRBhGdOg", title: "One Piece Ost - Kuma & Zoro Stand Off!",},
-            { start: 5, end: 10, id: "y_a5_jsGPfg", title: "One Piece Ost - Spirited Swordsman Zoro",},
-            { start: 11, end: 15, id: "I3VA2GRYS0E", title: "One Piece Ost - My Highest Point",},
-            { start: 16, end: 16, id: "SAs7uhheGtc", title: "One Piece Ost - Ace's Sacrifice",},
+            { start: 4, end: 4, id: "https://cdn.discordapp.com/attachments/1525990865619910666/1525993006635815052/kuma--zoro-stand-off.mp3?ex=6a55673c&is=6a5415bc&hm=e5c456e1a5e6c09e527cd186d0fcf61cda9a63ef7b5212215c70fbbea5d5fa5a&", title: "One Piece Ost - Kuma & Zoro Stand Off!",},
+            { start: 5, end: 10, id: "https://cdn.discordapp.com/attachments/1525990865619910666/1525993028685140150/One_Piece_OST_-_Spirited_Swordsman_Zoro_-_XImmortalX.mp3?ex=6a556741&is=6a5415c1&hm=e49247cb2253ff970ecfc2026cb45977c5154c6a0240836c2972f7126d70d598&", title: "One Piece Ost - Spirited Swordsman Zoro",},
+            { start: 11, end: 15, id: "https://cdn.discordapp.com/attachments/1525990865619910666/1525993327147614268/One_Piece_EP1071_OVERTAKEN_x_DRUMS_OF_LIBERATION_Gear5_Theme_EPIC_VERSION_-_Carameii.mp3?ex=6a556788&is=6a541608&hm=9cd0dfbd24937795c9b48c6bd8b1e268818432b06edb08c636a6465ce88bffa9&", title: "One Piece Ost - My Highest Point",},
+            { start: 16, end: 16, id: "https://cdn.discordapp.com/attachments/1525990865619910666/1525993079067115551/One_Piece_Ost_-_Aces_Sacrifice_-_Luffyhaki100.mp3?ex=6a55674d&is=6a5415cd&hm=ab3b4fbbb836cf72757cb1be10db45e39aa26b703f17bf2154810bdeec4ab499&", title: "One Piece Ost - Ace's Sacrifice",},
           ],
           default: { id: "p19p_mSIn_k", title: "Grand Line Ambient" },
         },
@@ -417,56 +417,33 @@
         }
       }
 
-      function reproducirOST(id, titulo) {
-        if (currentSongId === id) return;
-        currentSongId = id;
+      let currentSongUrl = "";
 
-        if (player && player.loadVideoById) {
-          // 1. Detenemos cualquier carga previa
-          player.stopVideo();
+      function reproducirOST(urlAudio, titulo) {
+        // Si ya está sonando esta misma canción, no hacemos nada
+        if (currentSongUrl === urlAudio) return;
+        currentSongUrl = urlAudio;
 
-          // 2. Cargamos el nuevo con un pequeño margen
-          player.loadVideoById({
-            videoId: id,
-            startSeconds: 0,
-            suggestedQuality: "small",
+        const player = document.getElementById("marmo-audio");
+        if (player) {
+          // Cambiamos la fuente por el archivo de audio directo
+          player.src = urlAudio;
+
+          // Sincronizamos el volumen con tu barra deslizadora
+          const slider = document.getElementById("volume-slider");
+          player.volume = slider ? slider.value : 0.5;
+
+          // Reproducir (aprovechando el gatillo de interacción que ya programamos)
+          player.play().catch((error) => {
+            console.log("Esperando que el usuario interactúe para sonar.");
           });
 
-          // 3. Forzamos el play
-          player.playVideo();
-          mostrarToast(titulo);
-        } else {
           mostrarToast(titulo);
         }
       }
 
-      // --- API YOUTUBE ---
-      var tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName("script")[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player("youtube-player", {
-          height: "0",
-          width: "0",
-          // ---> AGREGA ESTA LÍNEA AQUÍ <---
-          host: "https://www.youtube-nocookie.com",
-          // ----------------------------------
-          playerVars: {
-            loop: 1, // Activa el bucle
-            playlist: currentSongId, // Requerido por YouTube para que el loop funcione
-          },
-          events: {
-            onReady: (event) => {
-              event.target.setVolume(
-                document.getElementById("volume-slider").value,
-              );
-            },
-            onStateChange: onPlayerStateChange, // Detecta cuando termina la canción
-          },
-        });
-      }
+      // --- Aplicar OST Manga ---
+      <audio id="marmo-audio" loop style="display:none;"></audio>;
 
       // Esta función asegura que si la canción termina, se vuelva a reproducir la misma
       function onPlayerStateChange(event) {
